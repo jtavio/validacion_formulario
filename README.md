@@ -1,6 +1,7 @@
 # formulario_validacion
-
+(2021)
 Validation Form Login with patron bloc and personalized design
+Flutter 2 y Dart
 
 ## Getting Started
 
