@@ -1,6 +1,6 @@
 # formulario_validacion
 
-A new Flutter project.
+Validation Form Login with patron bloc and personalized design
 
 ## Getting Started
 
