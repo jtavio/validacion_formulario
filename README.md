@@ -1,6 +1,6 @@
 # formulario_validacion
 (2021)
-Validation Form Login with patron bloc and personalized design
+Validation Form Login with patron bloc and personalized design, auth firebase and database, cloudinary
 Flutter 2 y Dart
 
 ## Getting Started
