@@ -5,8 +5,9 @@ import 'package:formulario_validacion/src/bloc/provider.dart';
 import 'package:formulario_validacion/src/providers/usuario_provider.dart';
 import 'package:formulario_validacion/src/utils/utils.dart';
 
-class LoginPage extends StatelessWidget {
+class RegistroPage extends StatelessWidget {
   final usuarioProvider = new UsuarioProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +46,7 @@ class LoginPage extends StatelessWidget {
                 ]),
             child: Column(
               children: [
-                Text('Ingreso', style: TextStyle(fontSize: 20.0)),
+                Text('Crear cuenta', style: TextStyle(fontSize: 20.0)),
                 SizedBox(height: 50.0),
                 _crearEmail(bloc),
                 SizedBox(height: 25.0),
@@ -56,9 +57,8 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           TextButton(
-              onPressed: () =>
-                  Navigator.pushReplacementNamed(context, 'registro'),
-              child: Text('Crear una nueva cuenta')),
+              onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
+              child: Text('¿Ya tienes cuenta? Login')),
           SizedBox(
             height: 100.0,
           )
@@ -121,7 +121,7 @@ class LoginPage extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           child: ElevatedButton(
-            onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
+            onPressed: snapshot.hasData ? () => _register(bloc, context) : null,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
               child: Text('Ingresar'),
@@ -138,17 +138,13 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _login(LoginBloc bloc, BuildContext context) async {
-    Map info = await usuarioProvider.login(bloc.email, bloc.password);
-
+  _register(LoginBloc bloc, BuildContext context) async {
+    final info = await usuarioProvider.nuevousuario(bloc.email, bloc.password);
     if (info['ok']) {
       Navigator.pushReplacementNamed(context, 'home');
     } else {
       mostrarAlerta(context, info['mensaje']);
     }
-
-    // print('Email: ${bloc.email}');
-    // print('Password: ${bloc.password} ');
   }
 
   Widget _crearFondo(context) {
