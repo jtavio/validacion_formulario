@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:formulario_validacion/src/bloc/provider.dart';
 import 'package:formulario_validacion/src/models/producto_model.dart';
-import 'package:formulario_validacion/src/providers/productos_providers.dart';
 import 'package:formulario_validacion/src/utils/utils.dart' as utils;
 import 'package:image_picker/image_picker.dart';
 
@@ -15,7 +15,8 @@ class ProductoPage extends StatefulWidget {
 class _ProductoPageState extends State<ProductoPage> {
   final formkey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final productoProvider = new ProductosProvider();
+
+  late ProductosBloc productosBloc;
 
   ProductoModel producto = new ProductoModel();
   bool _guardando = false;
@@ -23,6 +24,7 @@ class _ProductoPageState extends State<ProductoPage> {
   final picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
+    productosBloc = Provider.productosBloc(context);
     if (ModalRoute.of(context)!.settings.arguments != null) {
       producto = ModalRoute.of(context)!.settings.arguments as ProductoModel;
     }
@@ -127,13 +129,13 @@ class _ProductoPageState extends State<ProductoPage> {
 
     //porcesar imagen en firebase
     if (foto != null) {
-      producto.fotoUrl = await productoProvider.subirImagen(foto!);
+      producto.fotoUrl = await productosBloc.subirFoto(foto!);
     }
 
     if (producto.id == null) {
-      productoProvider.crearProducto(producto);
+      productosBloc.agregarProductos(producto);
     } else {
-      productoProvider.editarProducto(producto);
+      productosBloc.editarProducto(producto);
     }
     setState(() {
       _guardando = false;

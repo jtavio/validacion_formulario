@@ -38,6 +38,8 @@ class ProductosProvider {
     // ignore: unnecessary_null_comparison
     if (decodedData == null) return [];
 
+    if (decodedData['error'] != null) return [];
+
     decodedData.forEach((id, prod) {
       print(productos);
       final prodTemp = ProductoModel.fromJson(prod);
